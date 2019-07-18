@@ -9,4 +9,4 @@ cache:
 
 script: 
     - npm install -g serverless
-    - sls deploy
+    - if [ $TRAVIS_BRANCH == "master" ]; then sls deploy; fi
