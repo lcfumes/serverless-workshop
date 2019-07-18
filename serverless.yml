@@ -1,0 +1,36 @@
+service: serverless-workshop
+
+plugins:
+  - serverless-offline
+  - serverless-prune-plugin
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: ${opt:stage, self:custom.defaultStage}
+  region: us-east-1
+  environment:
+    DB_USER: root
+    DB_PASS: 123456
+    ENV_NAME: ${opt:stage, self:provider.stage}
+
+custom:
+  defaultStage: dev
+  stage: ${opt:stage, self:provider.stage}
+  prune:
+    automatic: true
+    number: 1
+
+functions:
+  github:
+    handler: functions/user.handler
+    environment:
+      GITHUB_API: https://api.github.com
+    events:
+      - http:
+          path: github/{user}
+          method: get
+          request:
+            parameters:
+              paths:
+                user: true
