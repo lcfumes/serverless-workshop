@@ -14,3 +14,18 @@ custom:
     automatic: true
     number: 1
 
+functions:
+  users:
+    handler: functions/user.handler
+    environment:
+      DB_HOST: sls-workshop-users.cjmgmvbaia9s.us-east-1.rds.amazonaws.com
+      DB_USER: root
+      DB_PASS: EscaleWorkshop#123
+    events:
+      - http:
+          path: create/
+          method: post
+          request:
+            parameters:
+              paths:
+                user: true
