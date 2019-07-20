@@ -1,0 +1,15 @@
+language: node_js
+
+node_js:
+  - "node"
+
+script: 
+  - npm install serverless
+  - npm run test
+  
+deploy:
+  provider: script
+  script: sls deploy
+  skip_cleanup: true
+  on:
+    branch: master
